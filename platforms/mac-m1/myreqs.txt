@@ -1,0 +1,18 @@
+# requirements.txt created by version.sh
+# Date: Tue May 31 12:06:11 CDT 2022
+# Host: wirelessprv-10-193-137-95.near.illinois.edu [Darwin wirelessprv-10-193-137-95.near.illinois.edu 21.2.0 Darwin Kernel Version 21.2.0: Sun Nov 28 20:29:10 PST 2021; root:xnu-8019.61.5~1/RELEASE_ARM64_T8101 arm64]
+# Python: /Users/someguy/software/Install/Conda/envs/mirgeDriver.Y2wall/bin/python [Python 3.9.13]
+--editable git+https://github.com/majosm/arraycontext.git@8b75602#egg=arraycontext
+--editable git+https://github.com/inducer/dagrt.git@v2021.1-10-gfddc6f6#egg=dagrt
+--editable git+https://github.com/kaushikcfd/feinsum.git@2d9c2bb#egg=feinsum
+--editable git+https://github.com/majosm/grudge.git@ffcad25#egg=grudge
+--editable git+https://github.com/inducer/leap.git@60773c1#egg=leap
+--editable git+https://github.com/illinois-ceesd/logpyle.git@v2021.0-7-g42e89c8#egg=logpyle
+--editable git+https://github.com/kaushikcfd/loopy.git@5b9ae962#egg=loopy
+--editable git+https://github.com/majosm/meshmode.git@fefb2da#egg=meshmode
+--editable git+https://github.com/majosm/mirgecom@1a6f838#egg=mirgecom
+--editable git+https://github.com/inducer/modepy.git@v2021.1-73-g92fc396#egg=modepy
+--editable git+https://github.com/inducer/pymbolic.git@v2022.1-5-g74a2124#egg=pymbolic
+--editable git+https://github.com/ecisneros8/pyrometheus.git@4ee035e#egg=pyrometheus
+--editable git+https://github.com/kaushikcfd/pytato.git@8ecf7ff#egg=pytato
+--editable git+https://github.com/inducer/pyvisfile.git@v2022.1.1-2-g26a9742#egg=pyvisfile

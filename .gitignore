@@ -1,0 +1,10 @@
+emirge*
+remote_data
+experiments
+*.*vtu*
+*.sqlite*
+*.pkl
+runError*
+runOutput*
+*.out
+*.msh

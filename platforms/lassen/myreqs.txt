@@ -1,0 +1,18 @@
+# requirements.txt created by version.sh
+# Date: Thu Oct 20 07:03:09 PDT 2022
+# Host: lassen708.coral.llnl.gov [Linux lassen708 4.14.0-115.35.1.3chaos.ch6a.ppc64le #1 SMP Wed Jul 21 17:12:16 PDT 2021 ppc64le ppc64le ppc64le GNU/Linux]
+# Python: /usr/WS1/xpacc/Users/manders/software/Install/Lassen/Conda/envs/mirgeDriver.Y2wall/bin/python [Python 3.9.13]
+--editable git+https://github.com/kaushikcfd/arraycontext.git@7a22d2d#egg=arraycontext
+--editable git+https://github.com/inducer/dagrt.git@v2021.1-11-gf1ec99c#egg=dagrt
+--editable git+https://github.com/kaushikcfd/feinsum.git@a4e8465#egg=feinsum
+--editable git+https://github.com/majosm/grudge.git@3af1ca5#egg=grudge
+--editable git+https://github.com/inducer/leap.git@49b71b6#egg=leap
+--editable git+https://github.com/illinois-ceesd/logpyle.git@v2021.0-7-g42e89c8#egg=logpyle
+--editable git+https://github.com/kaushikcfd/loopy.git@50e243ba#egg=loopy
+--editable git+https://github.com/majosm/meshmode.git@1d39f9b#egg=meshmode
+--editable git+ssh://git@github.com/illinois-ceesd/mirgecom@738a18df#egg=mirgecom
+--editable git+https://github.com/inducer/modepy.git@v2021.1-76-gcfc5473#egg=modepy
+--editable git+https://github.com/inducer/pymbolic.git@v2022.1-17-g3da6f85#egg=pymbolic
+--editable git+https://github.com/pyrometheus/pyrometheus.git@feeee93#egg=pyrometheus
+--editable git+https://github.com/kaushikcfd/pytato.git@a174a76#egg=pytato
+--editable git+https://github.com/inducer/pyvisfile.git@v2022.1.1-3-g79f62c3#egg=pyvisfile
