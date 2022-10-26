@@ -330,8 +330,11 @@ def main(ctx_factory=cl.create_some_context,
     material = 0
 
     # Surface boundary values
-    surface_temperature = 600.0
-    surface_ox_mass = 0.25
+    surface_init_temperature = 1000
+    surface_final_temperature = 2000
+    surface_temperature_ramp_duration = 0.05
+    surface_fluid_rho = 0.05
+    surface_ox_y = 0.27
 
     if user_input_file:
         input_data = None
@@ -445,13 +448,29 @@ def main(ctx_factory=cl.create_some_context,
         except KeyError:
             pass
         try:
-            surface_temperature = float(input_data["surface_temperature"])
+            surface_init_temperature = float(input_data["surface_init_temperature"])
         except KeyError:
             pass
         try:
-            surface_ox_mass = float(input_data["surface_ox_mass"])
+            surface_final_temperature = float(
+                input_data["surface_final_temperature"])
         except KeyError:
             pass
+        try:
+            surface_temperature_ramp_duration = float(
+                input_data["surface_temperature_ramp_duration"])
+        except KeyError:
+            pass
+        try:
+            surface_fluid_rho = float(input_data["surface_fluid_rho"])
+        except KeyError:
+            pass
+        try:
+            surface_ox_y = float(input_data["surface_ox_y"])
+        except KeyError:
+            pass
+
+    surface_ox_mass = surface_fluid_rho * surface_ox_y
 
     # param sanity check
     allowed_integrators = ["rk4", "euler", "lsrk54", "lsrk144", "compiled_lsrk54"]
@@ -693,13 +712,17 @@ def main(ctx_factory=cl.create_some_context,
     # Set up the boundary conditions #
     ##################################
 
-    surface = DirichletDiffusionBoundary(surface_temperature)
-    farfield = DirichletDiffusionBoundary(init_temperature)
-
-    boundaries = {
-        BoundaryDomainTag("surface"): surface,
-        BoundaryDomainTag("wall_farfield"): farfield
-    }
+    def get_temperature_boundaries(t):
+        tau = actx.np.minimum(t/surface_temperature_ramp_duration, 1)
+        surface_temperature = (
+            (1 - tau) * surface_init_temperature
+            + tau * surface_final_temperature)
+        farfield = DirichletDiffusionBoundary(init_temperature)
+        surface = DirichletDiffusionBoundary(surface_temperature)
+        return {
+            BoundaryDomainTag("surface"): surface,
+            BoundaryDomainTag("wall_farfield"): farfield
+        }
 
     if use_ox:
         ox_surface = DirichletDiffusionBoundary(surface_ox_mass)
@@ -710,8 +733,9 @@ def main(ctx_factory=cl.create_some_context,
         }
 
     def _grad_t_operator(t, kappa, temperature):
+        temperature_boundaries = get_temperature_boundaries(t)
         return grad_operator(
-            dcoll, kappa, boundaries, temperature,
+            dcoll, kappa, temperature_boundaries, temperature,
             quadrature_tag=quadrature_tag)
 
     grad_t_operator = actx.compile(_grad_t_operator)
@@ -1139,8 +1163,10 @@ def main(ctx_factory=cl.create_some_context,
         wv = state
         wdv = wall_model.dependent_vars(wv)
 
+        temperature_boundaries = get_temperature_boundaries(t)
+
         energy_rhs = diffusion_operator(
-            dcoll, wdv.thermal_conductivity, boundaries, wdv.temperature,
+            dcoll, wdv.thermal_conductivity, temperature_boundaries, wdv.temperature,
             penalty_amount=penalty_amount, quadrature_tag=quadrature_tag,
             comm_tag=_EnergyDiffCommTag)
 
